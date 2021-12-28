@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Service.Tasks.IdleAsyncTask;
 import com.jb.sharkreccorder.Service.Tasks.OffHookAsyncTask;
 import com.jb.sharkreccorder.Service.Tasks.RingingAsyncTask;
@@ -15,15 +15,52 @@ import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
-import com.jb.sharkreccorder.Utils.Observer.ISujet;
-
-import java.util.ArrayList;
 
 public class RadioReceiver extends BroadcastReceiver implements IObserver {
 
-    public boolean wasRinging = false;
-    public boolean recordstarted = false;
+    private boolean wasRinging = false;
+    private boolean recordstarted = false;
     private MediaRecorder recorder;
+    private RecorderConfiguration recorderConfiguration;
+
+    // Default Builder
+    public RadioReceiver() {
+
+    }
+
+    //region PROPERTIES
+    public RecorderConfiguration getRecorderConfiguration() {
+        return recorderConfiguration;
+    }
+
+    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) {
+        this.recorderConfiguration = recorderConfiguration;
+    }
+
+    public boolean isWasRinging() {
+        return wasRinging;
+    }
+
+    public void setWasRinging(boolean wasRinging) {
+        this.wasRinging = wasRinging;
+    }
+
+    public boolean isRecordstarted() {
+        return recordstarted;
+    }
+
+    public void setRecordstarted(boolean recordstarted) {
+        this.recordstarted = recordstarted;
+    }
+
+    public MediaRecorder getRecorder() {
+        return recorder;
+    }
+
+    public void setRecorder(MediaRecorder recorder) {
+        this.recorder = recorder;
+    }
+    //endregion
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -35,30 +72,30 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
 
         switch (state) {
             case Constants.RINGING:
-                if(!wasRinging) {
+                if(!isWasRinging()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    wasRinging = true;
-                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, recorder, context, this);
+                    setWasRinging(true);
+                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorder(), context, this);
                     ringingTask.execute();
                 }
             break;
             case Constants.OFFHOOK:
-                if(!recordstarted) {
+                if(!isRecordstarted()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    recordstarted = true;
-                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, recorder, context, this);
+                    setRecordstarted(true);
+                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorder(), context, this);
                     offHookTask.execute();
                 }
                 break;
             case Constants.IDLE:
-                if(recordstarted)
+                if(isRecordstarted())
                 {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, recorder, context, this);
+                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorder(), context, this);
                     idleTask.execute();
-                    recordstarted = false;
+                    setRecordstarted(false);
                 }
-                wasRinging = false;
+                setWasRinging(false);
                 break;
         }
     }
@@ -74,8 +111,10 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
 
     @Override
     public void update(MediaRecorder recorder) {
-        this.recorder = recorder;
+        this.setRecorder(recorder);
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "UPDATE RECORDER");
     }
+
+
 
 }

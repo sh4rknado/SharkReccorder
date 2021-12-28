@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import com.jb.sharkreccorder.Model.RecorderConfigurations;
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import java.util.List;
 
 
@@ -14,16 +14,16 @@ public interface IDao {
 
     //region RecorderConfiguration
     @Insert
-    void insertRecorderConfiguration(RecorderConfigurations recorder);
+    void insertRecorderConfiguration(RecorderConfiguration recorder);
 
     @Delete
-    void deleteRecorderConfiguration(RecorderConfigurations recorder);
+    void deleteRecorderConfiguration(RecorderConfiguration recorder);
 
-    @Query("DELETE FROM recorder_configurations")
+    @Query("DELETE FROM RecorderConfiguration")
     void deleteAllRecorderConfigurations();
 
-    @Query("SELECT * FROM recorder_configurations")
-    LiveData<List<RecorderConfigurations>> getAllRecorderConfigurations();
+    @Query("SELECT * FROM RecorderConfiguration")
+    LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations();
     //endregion
 
 }

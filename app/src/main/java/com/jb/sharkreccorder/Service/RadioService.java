@@ -6,13 +6,18 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
+import com.jb.sharkreccorder.ViewModel.RecorderConfigurationViewModel;
+
+import java.util.List;
 
 public class RadioService extends Service {
 
     private RadioReceiver receiver;
+    private RecorderConfiguration recorderConfiguration;
 
     @Nullable
     @Override
@@ -23,6 +28,21 @@ public class RadioService extends Service {
     @Override
     public void onCreate(){
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "CREATE SERVICE");
+        InitializeRecorder();
+    }
+
+    private void InitializeRecorder() {
+        RecorderConfigurationViewModel rcViewModel = new RecorderConfigurationViewModel(this.getApplication());
+        List<RecorderConfiguration> recorderConfigurations =  rcViewModel.getAllRecorderConfigurations().getValue();
+
+        // Set default configuration
+        if(recorderConfigurations == null || recorderConfigurations.isEmpty())
+        {
+            recorderConfiguration = new RecorderConfiguration(7, 3, 1, 100);
+            rcViewModel.insert(recorderConfiguration, RecorderConfiguration.class);
+        }
+        else
+            this.recorderConfiguration = recorderConfigurations.get(0);
     }
 
     @Override
@@ -43,6 +63,7 @@ public class RadioService extends Service {
         filter.addAction(Constants.ACTION_OUT);
         filter.addAction(Constants.ACTION_IN);
         this.receiver = new RadioReceiver();
+        this.receiver.setRecorderConfiguration(recorderConfiguration);
         this.registerReceiver(this.receiver, filter);
 
         return Service.START_STICKY;

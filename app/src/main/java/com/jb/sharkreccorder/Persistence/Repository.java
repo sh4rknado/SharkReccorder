@@ -10,7 +10,7 @@ import java.util.List;
 public class Repository {
 
     private IDao dao;
-    private final LiveData<List<RecorderConfigurations>> recorderConfigurations;
+    private final LiveData<List<RecorderConfiguration>> recorderConfigurations;
 
     public Repository(Application application) {
         Database database = Database.getInstance(application);
@@ -20,24 +20,24 @@ public class Repository {
 
 
     //region RecorderConfiguration
-    public void insertRecorderConfiguration(RecorderConfigurations s) { new InsertRecorderConfigurationAsyncTask(dao).execute(s); }
-    public void deleteRecorderConfiguration(RecorderConfigurations s) { new DeleteRecorderConfigurationAsyncTask(dao).execute(s); }
+    public void insertRecorderConfiguration(RecorderConfiguration s) { new InsertRecorderConfigurationAsyncTask(dao).execute(s); }
+    public void deleteRecorderConfiguration(RecorderConfiguration s) { new DeleteRecorderConfigurationAsyncTask(dao).execute(s); }
     public void deleteAllRecorderConfiguration() { new DeleteAllRecorderConfigurationAsyncTask(dao); }
-    public LiveData<List<RecorderConfigurations>> getAllRecorderConfigurations() { return recorderConfigurations; }
+    public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations() { return recorderConfigurations; }
 
-    private static class InsertRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfigurations, Void, Void> {
+    private static class InsertRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfiguration, Void, Void> {
         private IDao dao;
 
         private InsertRecorderConfigurationAsyncTask(IDao dao) { this.dao = dao; }
 
         @Override
-        protected Void doInBackground(RecorderConfigurations... files) {
+        protected Void doInBackground(RecorderConfiguration... files) {
             dao.insertRecorderConfiguration(files[0]);
             return null;
         }
     }
 
-    private static class DeleteRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfigurations, Void, Void> {
+    private static class DeleteRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfiguration, Void, Void> {
         private IDao dao;
 
         private DeleteRecorderConfigurationAsyncTask(IDao dao) {
@@ -45,19 +45,19 @@ public class Repository {
         }
 
         @Override
-        protected Void doInBackground(RecorderConfigurations... recorders) {
+        protected Void doInBackground(RecorderConfiguration... recorders) {
             dao.deleteRecorderConfiguration(recorders[0]);
             return null;
         }
     }
 
-    private static class DeleteAllRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfigurations, Void, Void> {
+    private static class DeleteAllRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfiguration, Void, Void> {
         private IDao dao;
 
         private DeleteAllRecorderConfigurationAsyncTask(IDao dao) { this.dao = dao; }
 
         @Override
-        protected Void doInBackground(RecorderConfigurations... voids) {
+        protected Void doInBackground(RecorderConfiguration... voids) {
             dao.deleteAllRecorderConfigurations();
             return null;
         }

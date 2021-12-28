@@ -2,23 +2,15 @@ package com.jb.sharkreccorder.Persistence;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
+
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import com.google.gson.Gson;
-import com.jb.sharkreccorder.Model.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@androidx.room.Database(entities = {RecorderConfigurations.class}, version = 1)
+import com.jb.sharkreccorder.Model.*;
+
+@androidx.room.Database(entities = {RecorderConfiguration.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;

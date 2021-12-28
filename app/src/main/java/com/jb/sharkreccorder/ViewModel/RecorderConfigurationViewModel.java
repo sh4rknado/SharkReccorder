@@ -9,26 +9,26 @@ import java.util.Objects;
 
 public class RecorderConfigurationViewModel extends AViewModel {
 
-    LiveData<List<RecorderConfigurations>> recorders;
+    LiveData<List<RecorderConfiguration>> recorders;
 
     public RecorderConfigurationViewModel(@NonNull Application application) {
         super(application);
         recorders = repository.getAllRecorderConfigurations();
     }
 
-    public LiveData<List<RecorderConfigurations>> getAllRecorderConfigurations () {
+    public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations () {
         return repository.getAllRecorderConfigurations();
     }
 
-    public void deleteSelectedRecorderConfiguration(List<RecorderConfigurations> recorders) {
-        for (RecorderConfigurations rc: recorders) this.delete(rc, RecorderConfigurations.class);
+    public void deleteSelectedRecorderConfiguration(List<RecorderConfiguration> recorders) {
+        for (RecorderConfiguration rc: recorders) this.delete(rc, RecorderConfiguration.class);
     }
 
     public void updateModel(AModel model) {
-        for (RecorderConfigurations rc: Objects.requireNonNull(recorders.getValue())) {
+        for (RecorderConfiguration rc: Objects.requireNonNull(recorders.getValue())) {
             if(rc.getId().equals(model.getId())) {
-                this.delete(rc, RecorderConfigurations.class);
-                this.insert(model, RecorderConfigurations.class);
+                this.delete(rc, RecorderConfiguration.class);
+                this.insert(model, RecorderConfiguration.class);
                 return;
             }
         }

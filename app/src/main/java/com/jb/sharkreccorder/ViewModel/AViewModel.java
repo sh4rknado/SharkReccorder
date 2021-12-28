@@ -22,8 +22,8 @@ public class AViewModel extends AndroidViewModel {
         if(cls == null)
             return;
 
-        if (RecorderConfigurations.class.equals(cls))
-            repository.insertRecorderConfiguration((RecorderConfigurations) model);
+        if (RecorderConfiguration.class.equals(cls))
+            repository.insertRecorderConfiguration((RecorderConfiguration) model);
     }
 
     public void delete(AModel model, Class<?> cls) {
@@ -31,8 +31,8 @@ public class AViewModel extends AndroidViewModel {
         if(cls == null)
             return;
 
-        if (RecorderConfigurations.class.equals(cls))
-            repository.deleteRecorderConfiguration((RecorderConfigurations) model);
+        if (RecorderConfiguration.class.equals(cls))
+            repository.deleteRecorderConfiguration((RecorderConfiguration) model);
 
     }
 
@@ -42,7 +42,7 @@ public class AViewModel extends AndroidViewModel {
         if(cls == null)
             return;
 
-        if (RecorderConfigurations.class.equals(cls))
+        if (RecorderConfiguration.class.equals(cls))
             repository.deleteAllRecorderConfiguration();
 
     }

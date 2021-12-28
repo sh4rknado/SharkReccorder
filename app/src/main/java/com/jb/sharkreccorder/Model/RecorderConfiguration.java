@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 
 @Entity(tableName = "recorder_configurations")
-public class RecorderConfigurations extends AModel {
+public class RecorderConfiguration extends AModel {
 
     //region ATTRIBUTES
 
@@ -82,7 +82,7 @@ public class RecorderConfigurations extends AModel {
     public void setMediaRecorder(MediaRecorder mediaRecorder) { this.mediaRecorder = mediaRecorder; }
     //endregion
 
-    public RecorderConfigurations(int audioSource, int outputFormat, int audioEncoder, int gains) {
+    public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains) {
         this.mediaRecorder = new MediaRecorder();
         this.audioSource = audioSource;
         this.outputFormat = outputFormat;
