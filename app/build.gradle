@@ -12,6 +12,12 @@ android {
         versionCode 1
         versionName "1.0"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,15 +37,82 @@ android {
 }
 
 dependencies {
+    //region LifeCycle
 
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.4.0"
+
+    // LiveData
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-livedata:2.4.0"
+
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0"
+
+    // Annotation processor
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.0"
+
+    // optional - helpers for implementing LifecycleOwner in a Service
+    implementation "androidx.lifecycle:lifecycle-service:2.4.0"
+
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation "androidx.lifecycle:lifecycle-process:2.4.0"
+
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:2.4.0"
+
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // Extensions ViewModel
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    //endregion LifeCycle
+
+    //region ROOM
+
+    // https://mvnrepository.com/artifact/androidx.room/room-runtime
+    implementation group: 'androidx.room', name: 'room-runtime', version: '2.4.0'
+
+    // https://mvnrepository.com/artifact/androidx.room/room-compiler
+    annotationProcessor group: 'androidx.room', name: 'room-compiler', version: '2.4.0'
+
+    // https://mvnrepository.com/artifact/androidx.room/room-rxjava2
+    implementation group: 'androidx.room', name: 'room-rxjava2', version: '2.4.0'
+
+    // https://mvnrepository.com/artifact/androidx.room/room-rxjava3
+    implementation group: 'androidx.room', name: 'room-rxjava3', version: '2.4.0'
+
+    // https://mvnrepository.com/artifact/androidx.room/room-testing
+    testImplementation group: 'androidx.room', name: 'room-testing', version: '2.4.0'
+
+    //endregion ROOM
+
+    //region DEFAULT
+
+    /* Default Implementation*/
     implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
+    /* Add Fragment */
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+
+    /* Serialization JSON */
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    /* MATERIAL DESIGN THEME */
+    implementation 'com.google.android.material:material:1.4.0'
+
+    /*Default Test Unitaire */
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //endregion
+
+    //Network
+    implementation 'com.jcraft:jsch:0.1.54'
+    implementation 'commons-net:commons-net:3.8.0'
+
 }
