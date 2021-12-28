@@ -86,7 +86,7 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
 
     public void InitializeRecorder() {
         this.recorder = new MediaRecorder();
-        this.recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_CALL);
+        this.recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION);
         this.recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         this.SetAudioFile();
