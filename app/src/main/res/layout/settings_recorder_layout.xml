@@ -15,7 +15,7 @@
         <!-- OUTPUT FORMAT Settings -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/output_format_card"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
@@ -28,13 +28,13 @@
 
                 <RelativeLayout
                     android:id="@+id/layout_audio_desc"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/output_format_desc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -48,7 +48,7 @@
 
                         <TextView
                             android:id="@+id/textview_output_format_desc"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/format_audio" />
 
@@ -57,7 +57,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginTop="-6dp"
+
                     android:layout_width="wrap_content"
                     android:layout_alignEnd="@+id/layout_audio_desc"
                     android:layout_height="wrap_content">
@@ -80,14 +80,13 @@
 
                 </RelativeLayout>
 
-
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
         <!-- AUDIO SOURCE Settings -->
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
@@ -100,27 +99,35 @@
 
                 <RelativeLayout
                     android:id="@+id/audio_source_layout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/audio_source_title"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Audio Source"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        tools:ignore="UselessParent">
 
-                    <TextView
-                        android:id="@+id/audio_source_desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/audio_source_title"
-                        android:text="@string/audio_source" />
+                        <TextView
+                            android:id="@+id/audio_source_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="Audio Source"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <TextView
+                            android:id="@+id/audio_source_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/audio_source_title"
+                            android:text="@string/audio_source" />
+
+                    </LinearLayout>
+
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginTop="-6dp"
                     android:layout_alignEnd="@+id/audio_source_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
