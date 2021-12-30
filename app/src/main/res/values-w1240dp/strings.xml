@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SharkReccorder</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -13,6 +14,7 @@
     <string name="format_audio">choisissez le type de fichier à enregistrer</string>
     <string name="audio_source">Selectionnez d\'où viens l\'audio</string>
     <string name="menu_settings">Settings</string>
+
 
     <string-array name="audio_formats">
         <item>DEFAULT</item>

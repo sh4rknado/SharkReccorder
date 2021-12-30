@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import java.io.File;
+
 @Entity(tableName = "recorder_configurations")
 public class RecorderConfiguration extends AModel {
 
@@ -48,6 +50,9 @@ public class RecorderConfiguration extends AModel {
     @ColumnInfo(name = "audio_encoder")
     private int audioEncoder;
 
+    @ColumnInfo(name = "is_current")
+    private boolean isCurrent;
+
     // 0% -> 300% (Default = 100%)
     @ColumnInfo(name = "level")
     private int gains;
@@ -80,14 +85,29 @@ public class RecorderConfiguration extends AModel {
 
     public MediaRecorder getMediaRecorder() { return mediaRecorder; }
     public void setMediaRecorder(MediaRecorder mediaRecorder) { this.mediaRecorder = mediaRecorder; }
+
+    public boolean isCurrent() { return isCurrent; }
+    public void setCurrent(boolean current) { isCurrent = current; }
     //endregion
 
     public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains) {
         this.mediaRecorder = new MediaRecorder();
         this.audioSource = audioSource;
+        this.mediaRecorder = new MediaRecorder();
+        this.audioSource = audioSource;
         this.outputFormat = outputFormat;
         this.audioEncoder = audioEncoder;
         this.gains = gains;
+    }
+
+    public  void SetAudioFile(String file) {
+        this.mediaRecorder.setOutputFile(file);
+    }
+
+    public void Reset(){
+        this.mediaRecorder.stop();
+        this.mediaRecorder.reset();   // You can reuse the object by going back to setAudioSource() step
+        this.mediaRecorder.release(); // Now the object cannot be reused
     }
 
 }

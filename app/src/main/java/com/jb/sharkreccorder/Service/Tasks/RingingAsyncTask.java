@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
+import android.media.browse.MediaBrowser;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
@@ -16,7 +18,7 @@ public class RingingAsyncTask extends RadioAsyncTask {
 
     private final String TAG = "RingingAsyncTask";
 
-    public RingingAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, MediaRecorder recorder, Context context, IObserver o) {
+    public RingingAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, IObserver o) {
         super(pendingResult, intent, recorder, context, o);
     }
 
@@ -32,8 +34,8 @@ public class RingingAsyncTask extends RadioAsyncTask {
 
         Logger.Logging(LoggerLevel.INFOS, TAG, "INITIALIZE RECORDER");
 
-        this.InitializeRecorder();
-        MediaRecorder recorder = getRecorder();
+        this.SetAudioFile();
+        MediaRecorder recorder = getRecorderConfiguration().getMediaRecorder();
 
         try {
             recorder.prepare();

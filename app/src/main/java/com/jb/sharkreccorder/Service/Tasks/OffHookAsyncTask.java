@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
@@ -14,7 +15,7 @@ public class OffHookAsyncTask extends RadioAsyncTask {
 
     private final String TAG = "OffHookAsyncTask";
 
-    public OffHookAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, MediaRecorder recorder, Context context, IObserver o) {
+    public OffHookAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, IObserver o) {
         super(pendingResult, intent, recorder, context, o);
     }
 

@@ -2,10 +2,12 @@ package com.jb.sharkreccorder.ViewModel;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import com.jb.sharkreccorder.Model.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Observer;
 
 public class RecorderConfigurationViewModel extends AViewModel {
 
@@ -17,7 +19,7 @@ public class RecorderConfigurationViewModel extends AViewModel {
     }
 
     public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations () {
-        return repository.getAllRecorderConfigurations();
+        return recorders;
     }
 
     public void deleteSelectedRecorderConfiguration(List<RecorderConfiguration> recorders) {
@@ -32,6 +34,10 @@ public class RecorderConfigurationViewModel extends AViewModel {
                 return;
             }
         }
+    }
+
+    public RecorderConfiguration getFirstConfigurations() {
+       return repository.getCurrentConfiguration();
     }
 
 }

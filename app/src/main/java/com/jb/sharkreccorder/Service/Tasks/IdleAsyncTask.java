@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
@@ -18,16 +19,16 @@ public class IdleAsyncTask extends RadioAsyncTask {
 
     private final String TAG = "IDLE_ASYNC_TASK";
 
-    public IdleAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, MediaRecorder recorder, Context context, IObserver o) {
+    public IdleAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, IObserver o) {
         super(pendingResult, intent, recorder, context, o);
     }
 
     @Override
     protected String doInBackground(String... strings) {
         Logger.Logging(LoggerLevel.INFOS, TAG, "CALLING STATE : IDLE");
-        MediaRecorder recorder = getRecorder();
+        RecorderConfiguration recorder = getRecorderConfiguration();
 
-        if(recorder != null) {
+        if(recorder.getMediaRecorder() != null) {
             ResetRecorder();
         }
         return "STOP RECORDING";

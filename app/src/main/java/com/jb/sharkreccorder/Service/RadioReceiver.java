@@ -75,7 +75,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(!isWasRinging()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setWasRinging(true);
-                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorder(), context, this);
+                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
                     ringingTask.execute();
                 }
             break;
@@ -83,7 +83,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(!isRecordstarted()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setRecordstarted(true);
-                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorder(), context, this);
+                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
                     offHookTask.execute();
                 }
                 break;
@@ -91,7 +91,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(isRecordstarted())
                 {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorder(), context, this);
+                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
                     idleTask.execute();
                     setRecordstarted(false);
                 }

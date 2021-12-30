@@ -19,11 +19,14 @@ public interface IDao {
     @Delete
     void deleteRecorderConfiguration(RecorderConfiguration recorder);
 
-    @Query("DELETE FROM RecorderConfiguration")
+    @Query("DELETE FROM recorder_configurations")
     void deleteAllRecorderConfigurations();
 
-    @Query("SELECT * FROM RecorderConfiguration")
+    @Query("SELECT * FROM recorder_configurations")
     LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations();
+
+    @Query("SELECT * FROM recorder_configurations WHERE is_current = 1")
+    LiveData<List<RecorderConfiguration>> getCurrentConfiguration();
     //endregion
 
 }

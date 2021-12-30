@@ -52,6 +52,7 @@ public abstract class AModel {
     public static List<String>  ConvertToListString(String json, Type type) {
         return new GsonBuilder().create().fromJson(json, type);
     }
+
     //endregion
 
 }

@@ -7,6 +7,7 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Environment;
 
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
@@ -22,17 +23,17 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     private final BroadcastReceiver.PendingResult pendingResult;
     private final Intent intent;
     private final Context context;
-    private MediaRecorder recorder;
     private File directory;
     private ArrayList<IObserver> observers;
+    private RecorderConfiguration recorderConfiguration;
     public final String TAG = "RadioAsyncTask";
 
-    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, MediaRecorder recorder, Context context, IObserver o) {
+    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration configuration, Context context, IObserver o) {
         this.pendingResult = pendingResult;
         this.intent = intent;
         this.context = context;
         this.observers = new ArrayList<>();
-        this.setRecorder(recorder);
+        this.recorderConfiguration = configuration;
         this.register(o);
     }
 
@@ -50,20 +51,20 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
         return context;
     }
 
-    public MediaRecorder getRecorder() {
-        return recorder;
-    }
-
-    public void setRecorder(MediaRecorder recorder) {
-        this.recorder = recorder;
-    }
-
     public File getDirectory() {
         return directory;
     }
 
     public void setDirectory(File directory) {
         this.directory = directory;
+    }
+
+    public RecorderConfiguration getRecorderConfiguration() {
+        return recorderConfiguration;
+    }
+
+    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) {
+        this.recorderConfiguration = recorderConfiguration;
     }
 
     //endregion
@@ -84,14 +85,6 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
 
     //region MEDIA RECORDER
 
-    public void InitializeRecorder() {
-        this.recorder = new MediaRecorder();
-        this.recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION);
-        this.recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        this.SetAudioFile();
-    }
-
     public void SetAudioFile() {
          this.directory = new File(getContext().getFilesDir(), "SharkRecorder");
 
@@ -103,18 +96,13 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
 
         String audioFile = getDirectory().getAbsolutePath() + "/sharkRecorder-" + Constants.DATE + ".3gp";
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RECORD FILE  : " + audioFile);
-        this.recorder.setOutputFile(audioFile);
+        this.recorderConfiguration.SetAudioFile(audioFile);
     }
 
     public void ResetRecorder() {
         Logger.Logging(LoggerLevel.INFOS, TAG, "STOP RECORDING");
-        recorder.stop();
-        recorder.reset();   // You can reuse the object by going back to setAudioSource() step
-        recorder.release(); // Now the object cannot be reused
-
+        this.recorderConfiguration.Reset();
         Logger.Logging(LoggerLevel.INFOS, TAG, "CLEAN RECORDER");
-        this.recorder = null;
-        update(null);
     }
 
     //endregion
@@ -128,7 +116,6 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
 
     @Override
     public void update(MediaRecorder recorder) {
-        this.setRecorder(recorder);
         for (IObserver o: observers) {
             o.update(recorder);
         }

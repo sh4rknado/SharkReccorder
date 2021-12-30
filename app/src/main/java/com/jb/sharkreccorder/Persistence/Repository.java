@@ -4,6 +4,9 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
+
 import com.jb.sharkreccorder.Model.*;
 import java.util.List;
 
@@ -24,6 +27,16 @@ public class Repository {
     public void deleteRecorderConfiguration(RecorderConfiguration s) { new DeleteRecorderConfigurationAsyncTask(dao).execute(s); }
     public void deleteAllRecorderConfiguration() { new DeleteAllRecorderConfigurationAsyncTask(dao); }
     public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations() { return recorderConfigurations; }
+
+    public RecorderConfiguration getCurrentConfiguration() {
+        List<RecorderConfiguration> configs = recorderConfigurations.getValue();
+
+        if(configs == null) {
+            return null;
+        }
+
+        return configs.get(0);
+    }
 
     private static class InsertRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfiguration, Void, Void> {
         private IDao dao;
@@ -62,6 +75,7 @@ public class Repository {
             return null;
         }
     }
+
 
     //endregion
 
