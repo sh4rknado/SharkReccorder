@@ -1,6 +1,7 @@
 package com.jb.sharkreccorder.Persistence;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,8 +26,12 @@ public interface IDao {
     @Query("SELECT * FROM recorder_configurations")
     LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations();
 
-    @Query("SELECT * FROM recorder_configurations WHERE is_current = 1")
+    @Query("SELECT * FROM recorder_configurations LIMIT 1")
     LiveData<List<RecorderConfiguration>> getCurrentConfiguration();
+
+    @Query("SELECT auto_start FROM recorder_configurations")
+    boolean getAutoStartConfiguration();
+
     //endregion
 
 }

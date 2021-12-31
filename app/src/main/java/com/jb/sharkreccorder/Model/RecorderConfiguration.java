@@ -50,12 +50,21 @@ public class RecorderConfiguration extends AModel {
     @ColumnInfo(name = "audio_encoder")
     private int audioEncoder;
 
-    @ColumnInfo(name = "is_current")
-    private boolean isCurrent;
-
     // 0% -> 300% (Default = 100%)
     @ColumnInfo(name = "level")
     private int gains;
+
+    @ColumnInfo(name = "auto_start")
+    private boolean auto_start;
+
+    @ColumnInfo(name = "audio_channel")
+    private int audio_channel;
+
+    @ColumnInfo(name = "encoding_rate")
+    private int encoding_rate;
+
+    @ColumnInfo(name = "sample_rate")
+    private int sample_rate;
 
     @Ignore
     private MediaRecorder mediaRecorder;
@@ -80,24 +89,44 @@ public class RecorderConfiguration extends AModel {
         this.mediaRecorder.setAudioEncoder(audioEncoder);
     }
 
+    public int getAudio_channel() { return audio_channel; }
+    public void setAudio_channel(int audio_channel) {
+        this.audio_channel = audio_channel;
+        this.mediaRecorder.setAudioChannels(audio_channel);
+    }
+
+    public int getEncoding_rate() { return encoding_rate; }
+    public void setEncoding_rate(int encoding_rate) {
+        this.encoding_rate = encoding_rate;
+        this.mediaRecorder.setAudioEncodingBitRate(encoding_rate);
+    }
+
+    public int getSample_rate() { return sample_rate; }
+    public void setSample_rate(int sample_rate) {
+        this.sample_rate = sample_rate;
+        this.mediaRecorder.setAudioSamplingRate(sample_rate);
+    }
+
     public int getGains() { return gains; }
     public void setGains(int gains) { this.gains = gains; }
+
+    public boolean isAuto_start() { return auto_start; }
+    public void setAuto_start(boolean current) { auto_start = current; }
 
     public MediaRecorder getMediaRecorder() { return mediaRecorder; }
     public void setMediaRecorder(MediaRecorder mediaRecorder) { this.mediaRecorder = mediaRecorder; }
 
-    public boolean isCurrent() { return isCurrent; }
-    public void setCurrent(boolean current) { isCurrent = current; }
     //endregion
 
-    public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains) {
-        this.mediaRecorder = new MediaRecorder();
-        this.audioSource = audioSource;
-        this.mediaRecorder = new MediaRecorder();
+    public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains, boolean auto_start, int audio_channel, int encoding_rate, int sample_rate) {
         this.audioSource = audioSource;
         this.outputFormat = outputFormat;
         this.audioEncoder = audioEncoder;
         this.gains = gains;
+        this.auto_start = auto_start;
+        this.audio_channel = audio_channel;
+        this.encoding_rate = encoding_rate;
+        this.sample_rate = sample_rate;
     }
 
     public  void SetAudioFile(String file) {

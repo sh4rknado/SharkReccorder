@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d8aa2ef2d8ff78acf91cb604552e1a6d",
+    "identityHash": "84eef485349ec487907aa9917c3915fc",
     "entities": [
       {
         "tableName": "recorder_configurations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`audio_source` INTEGER NOT NULL, `output_format` INTEGER NOT NULL, `audio_encoder` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `level` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`audio_source` INTEGER NOT NULL, `output_format` INTEGER NOT NULL, `audio_encoder` INTEGER NOT NULL, `level` INTEGER NOT NULL, `auto_start` INTEGER NOT NULL, `audio_channel` INTEGER NOT NULL, `encoding_rate` INTEGER NOT NULL, `sample_rate` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "audioSource",
@@ -27,14 +27,32 @@
             "notNull": true
           },
           {
-            "fieldPath": "isCurrent",
-            "columnName": "is_current",
+            "fieldPath": "gains",
+            "columnName": "level",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "gains",
-            "columnName": "level",
+            "fieldPath": "auto_start",
+            "columnName": "auto_start",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "audio_channel",
+            "columnName": "audio_channel",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encoding_rate",
+            "columnName": "encoding_rate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sample_rate",
+            "columnName": "sample_rate",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -58,7 +76,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd8aa2ef2d8ff78acf91cb604552e1a6d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '84eef485349ec487907aa9917c3915fc')"
     ]
   }
 }

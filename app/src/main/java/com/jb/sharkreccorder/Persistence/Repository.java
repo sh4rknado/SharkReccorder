@@ -14,26 +14,27 @@ public class Repository {
 
     private IDao dao;
     private final LiveData<List<RecorderConfiguration>> recorderConfigurations;
+    private final RecorderConfiguration currentConfigurations;
 
     public Repository(Application application) {
         Database database = Database.getInstance(application);
-        dao = database.dao();
-        recorderConfigurations = dao.getAllRecorderConfigurations();
+        this.dao = database.dao();
+        this.recorderConfigurations = dao.getAllRecorderConfigurations();
+        this.currentConfigurations = fetchCurrentConfigurations();
     }
-
 
     //region RecorderConfiguration
     public void insertRecorderConfiguration(RecorderConfiguration s) { new InsertRecorderConfigurationAsyncTask(dao).execute(s); }
     public void deleteRecorderConfiguration(RecorderConfiguration s) { new DeleteRecorderConfigurationAsyncTask(dao).execute(s); }
     public void deleteAllRecorderConfiguration() { new DeleteAllRecorderConfigurationAsyncTask(dao); }
     public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations() { return recorderConfigurations; }
+    public RecorderConfiguration getCurrentConfiguration() { return currentConfigurations; }
 
-    public RecorderConfiguration getCurrentConfiguration() {
-        List<RecorderConfiguration> configs = recorderConfigurations.getValue();
+    private RecorderConfiguration fetchCurrentConfigurations() {
+        List<RecorderConfiguration> configs = dao.getCurrentConfiguration().getValue();
 
-        if(configs == null) {
+        if(configs == null || configs.isEmpty())
             return null;
-        }
 
         return configs.get(0);
     }
@@ -75,6 +76,7 @@ public class Repository {
             return null;
         }
     }
+
 
 
     //endregion
