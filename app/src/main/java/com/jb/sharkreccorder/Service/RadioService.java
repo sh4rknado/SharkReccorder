@@ -38,7 +38,7 @@ public class RadioService extends Service {
         // Set default configuration
         if(recorderConfig == null)
         {
-            recorderConfiguration = new RecorderConfiguration(7, 3, 1, 100);
+            recorderConfiguration = new RecorderConfiguration(7, 3, 1, 100, true, 1, 128000, 48000);
             rcViewModel.insert(recorderConfiguration, RecorderConfiguration.class);
         }
         else

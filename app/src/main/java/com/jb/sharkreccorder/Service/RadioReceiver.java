@@ -110,11 +110,12 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
     }
 
     @Override
-    public void update(MediaRecorder recorder) {
-        this.setRecorder(recorder);
-        Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "UPDATE RECORDER");
+    public void update(String key, Object value) {
+        switch (key) {
+            case Constants.MEDIA_RECORDER:
+                this.setRecorder((MediaRecorder) value);
+                Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "UPDATE RECORDER");
+                break;
+        }
     }
-
-
-
 }

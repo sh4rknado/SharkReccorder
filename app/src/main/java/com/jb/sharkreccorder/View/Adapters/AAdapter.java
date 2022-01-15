@@ -1,30 +1,21 @@
 package com.jb.sharkreccorder.View.Adapters;
 
 import android.view.ViewGroup;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
-import com.jb.sharkreccorder.R;
 import com.jb.sharkreccorder.View.Holders.AHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AAdapter<AModel, ViewHolder extends AHolder> extends RecyclerView.Adapter<ViewHolder> {
+public abstract class AAdapter<AModel, ViewHolder extends AHolder> extends RecyclerView.Adapter<ViewHolder>  implements IObserver {
 
-    private List<IObserver> observers;
     public List<ViewHolder> modelHolders;
     public List<AModel> models;
     public ViewGroup parent;
 
     public AAdapter() {
         this.modelHolders = new ArrayList<>();
-        this.observers = new ArrayList<>();
         this.models = new ArrayList<>();
-    }
-
-    public AAdapter(IObserver o) {
-        this();
-        // this.register(o);
     }
 
     public List<AModel> getSelectedItem() {

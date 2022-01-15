@@ -41,7 +41,7 @@ public class RingingAsyncTask extends RadioAsyncTask {
             recorder.prepare();
             recorder.start();
             Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "STARTING RECORDER");
-            this.update(recorder);
+            this.update(Constants.MEDIA_RECORDER, recorder);
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -58,8 +58,8 @@ public class RingingAsyncTask extends RadioAsyncTask {
     }
 
     @Override
-    public void update(MediaRecorder recorder) {
-        super.update(recorder);
+    public void update(String key, Object value) {
+        super.update(key, value);
     }
 
 }

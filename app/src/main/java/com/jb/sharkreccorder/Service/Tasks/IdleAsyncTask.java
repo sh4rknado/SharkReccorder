@@ -40,8 +40,8 @@ public class IdleAsyncTask extends RadioAsyncTask {
     }
 
     @Override
-    public void update(MediaRecorder recorder) {
-        super.update(recorder);
+    public void update(String key, Object value) {
+        super.update(key, value);
     }
 
 }

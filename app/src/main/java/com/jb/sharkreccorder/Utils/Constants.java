@@ -19,4 +19,5 @@ public class Constants {
     public static final String OFFHOOK = "OFFHOOK";
     public static final String RINGING = "RINGING";
 
+    public static final String MEDIA_RECORDER = "MEDIA_RECORDER";
 }

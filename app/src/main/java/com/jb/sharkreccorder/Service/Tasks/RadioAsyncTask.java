@@ -115,9 +115,9 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     public void unregister(IObserver o) { observers.remove(o); }
 
     @Override
-    public void update(MediaRecorder recorder) {
+    public void update(String key, Object value) {
         for (IObserver o: observers) {
-            o.update(recorder);
+            o.update(key, value);
         }
     }
     //endregion
