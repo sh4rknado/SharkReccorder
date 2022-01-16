@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.jb.sharkreccorder.Utils.Logger.Logger;
+import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
+
 import java.io.File;
 
 @Entity(tableName = "recorder_configurations")
@@ -72,40 +75,22 @@ public class RecorderConfiguration extends AModel {
 
     //region PROPERTIES
     public int getAudioSource() { return audioSource; }
-    public void setAudioSource(int audioSource) {
-        this.audioSource = audioSource;
-        mediaRecorder.setAudioSource(audioSource);
-    }
+    public void setAudioSource(int audioSource) { this.audioSource = audioSource; }
 
     public int getOutputFormat() { return outputFormat; }
-    public void setOutputFormat(int outputFormat) {
-        this.outputFormat = outputFormat;
-        this.mediaRecorder.setOutputFormat(outputFormat);
-    }
+    public void setOutputFormat(int outputFormat) { this.outputFormat = outputFormat; }
 
     public int getAudioEncoder() { return audioEncoder; }
-    public void setAudioEncoder(int audioEncoder) {
-        this.audioEncoder = audioEncoder;
-        this.mediaRecorder.setAudioEncoder(audioEncoder);
-    }
+    public void setAudioEncoder(int audioEncoder) { this.audioEncoder = audioEncoder; }
 
     public int getAudio_channel() { return audio_channel; }
-    public void setAudio_channel(int audio_channel) {
-        this.audio_channel = audio_channel;
-        this.mediaRecorder.setAudioChannels(audio_channel);
-    }
+    public void setAudio_channel(int audio_channel) { this.audio_channel = audio_channel; }
 
     public int getEncoding_rate() { return encoding_rate; }
-    public void setEncoding_rate(int encoding_rate) {
-        this.encoding_rate = encoding_rate;
-        this.mediaRecorder.setAudioEncodingBitRate(encoding_rate);
-    }
+    public void setEncoding_rate(int encoding_rate) { this.encoding_rate = encoding_rate; }
 
     public int getSample_rate() { return sample_rate; }
-    public void setSample_rate(int sample_rate) {
-        this.sample_rate = sample_rate;
-        this.mediaRecorder.setAudioSamplingRate(sample_rate);
-    }
+    public void setSample_rate(int sample_rate) { this.sample_rate = sample_rate; }
 
     public int getGains() { return gains; }
     public void setGains(int gains) { this.gains = gains; }
@@ -113,7 +98,21 @@ public class RecorderConfiguration extends AModel {
     public boolean isAuto_start() { return auto_start; }
     public void setAuto_start(boolean current) { auto_start = current; }
 
-    public MediaRecorder getMediaRecorder() { return mediaRecorder; }
+    public MediaRecorder getMediaRecorder() {
+        try {
+            this.mediaRecorder.setAudioSource(audioSource);
+            this.mediaRecorder.setOutputFormat(outputFormat);
+            this.mediaRecorder.setAudioEncoder(audioEncoder);
+            this.mediaRecorder.setAudioChannels(audio_channel);
+            this.mediaRecorder.setAudioEncodingBitRate(encoding_rate);
+            this.mediaRecorder.setAudioSamplingRate(sample_rate);
+            return mediaRecorder;
+        }
+        catch (Exception ex){
+            Logger.Logging(LoggerLevel.ERROR, "TAGGING", "Error when initialize MediaRecorder : " + ex.getMessage() + " with the reason : " + ex.getCause());
+            return null;
+        }
+    }
     public void setMediaRecorder(MediaRecorder mediaRecorder) { this.mediaRecorder = mediaRecorder; }
 
     //endregion
@@ -127,6 +126,7 @@ public class RecorderConfiguration extends AModel {
         this.audio_channel = audio_channel;
         this.encoding_rate = encoding_rate;
         this.sample_rate = sample_rate;
+        this.mediaRecorder =  new MediaRecorder();
     }
 
     public  void SetAudioFile(String file) {

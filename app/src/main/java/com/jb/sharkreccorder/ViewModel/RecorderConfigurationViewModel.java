@@ -11,11 +11,11 @@ import java.util.Observer;
 
 public class RecorderConfigurationViewModel extends AViewModel {
 
-    LiveData<List<RecorderConfiguration>> recorders;
+    private LiveData<List<RecorderConfiguration>> recorders;
 
     public RecorderConfigurationViewModel(@NonNull Application application) {
         super(application);
-        recorders = repository.getAllRecorderConfigurations();
+        this.recorders = repository.getAllRecorderConfigurations();
     }
 
     public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations () {

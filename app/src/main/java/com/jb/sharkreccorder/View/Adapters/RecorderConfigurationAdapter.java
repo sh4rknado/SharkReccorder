@@ -1,13 +1,10 @@
 package com.jb.sharkreccorder.View.Adapters;
 
-import android.content.DialogInterface;
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
-import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.CompletionInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -19,18 +16,61 @@ import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
-import com.jb.sharkreccorder.Utils.Observer.ISujet;
 import com.jb.sharkreccorder.View.Holders.AHolder;
 import com.jb.sharkreccorder.R;
 
-import java.io.Console;
-import java.util.Observer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecorderConfigurationAdapter extends AAdapter<RecorderConfiguration, RecorderConfigurationAdapter.RecorderConfigurationHolder> {
 
     private RecorderConfiguration currentConfig;
+    private String[] output_formats;
+    private String[] audio_sources;
+    private Map<String, Integer> audioSourceDictionary;
+    private Map<String, Integer> outputFormatDictionary;
+    private Map<String, Integer> audioEncoderDictionary;
 
-    public RecorderConfigurationAdapter() { super(); }
+    public RecorderConfigurationAdapter() {
+        super();
+        InitializeDictionary();
+    }
+
+    private void InitializeDictionary() {
+        audioSourceDictionary = new HashMap<>();
+        outputFormatDictionary = new HashMap<>();
+        audioEncoderDictionary = new HashMap<>();
+
+        audioSourceDictionary.put("DEFAULT", 0);
+        audioSourceDictionary.put("MIC", 1);
+        audioSourceDictionary.put("VOICE_UPLINK", 2);
+        audioSourceDictionary.put("VOICE_DOWNLINK", 3);
+        audioSourceDictionary.put("VOICE_CALL", 4);
+        audioSourceDictionary.put("CAMCORDER", 5);
+        audioSourceDictionary.put("VOICE_RECOGNITION", 6);
+        audioSourceDictionary.put("VOICE_COMMUNICATION", 7);
+        audioSourceDictionary.put("REMOTE_SUBMIX", 8);
+        audioSourceDictionary.put("UNPROCESSED", 9);
+        audioSourceDictionary.put("VOICE_PERFORMANCE", 10);
+
+        outputFormatDictionary.put("DEFAULT", 0);
+        outputFormatDictionary.put("MPEG_4", 2);
+        outputFormatDictionary.put("AMR_NB", 3);
+        outputFormatDictionary.put("AMR_WB", 4);
+        outputFormatDictionary.put("ACC_ADTS", 6);
+        outputFormatDictionary.put("MPEG_2_TS", 8);
+        outputFormatDictionary.put("OGG", 11);
+
+        audioEncoderDictionary.put("DEFAULT", 0);
+        audioEncoderDictionary.put("AMR_NB", 1);
+        audioEncoderDictionary.put("AMR_WB", 2);
+        audioEncoderDictionary.put("ACC", 3);
+        audioEncoderDictionary.put("HE_AAC", 4);
+        audioEncoderDictionary.put("AAC_ELD", 5);
+        audioEncoderDictionary.put("VORBIS", 6);
+        audioEncoderDictionary.put("OPUS", 7);
+    }
+
 
     @NonNull
     @Override
@@ -43,8 +83,8 @@ public class RecorderConfigurationAdapter extends AAdapter<RecorderConfiguration
 
     @Override
     public void onBindViewHolder(@NonNull RecorderConfigurationHolder holder, int position) {
-        String[] output_formats = this.parent.getResources().getStringArray(R.array.audio_formats);
-        String[] audio_sources = this.parent.getResources().getStringArray(R.array.audio_sources);
+        this.output_formats = this.parent.getResources().getStringArray(R.array.audio_formats);
+        this.audio_sources = this.parent.getResources().getStringArray(R.array.audio_sources);
 
         ArrayAdapter<? extends String> output_format_adapter = new ArrayAdapter<>(this.parent.getContext(), R.layout.combobox_item, output_formats);
         holder.output_format.setAdapter(output_format_adapter);
@@ -58,6 +98,20 @@ public class RecorderConfigurationAdapter extends AAdapter<RecorderConfiguration
 
     @Override
     public void update(String key, Object value) {
+        int index = -1;
+        switch (key){
+            case "audio_source":
+                index = audioSourceDictionary.get(value);
+                this.currentConfig.setAudioSource(index);
+                break;
+            case "output_format":
+                index = outputFormatDictionary.get(value);
+                this.currentConfig.setOutputFormat(index);
+                break;
+            case "auto_start":
+                this.currentConfig.setAuto_start((boolean)value);
+                break;
+        }
         Logger.Logging(LoggerLevel.INFOS, "UPDATER RECORDER ADAPTER => ", "KEY : " + key  + " VALUE : " + value );
     }
 
