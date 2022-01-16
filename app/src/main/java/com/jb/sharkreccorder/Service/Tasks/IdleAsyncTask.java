@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
+import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
@@ -12,15 +13,13 @@ import com.jb.sharkreccorder.Utils.Observer.IObserver;
 
 public class IdleAsyncTask extends RadioAsyncTask {
 
-    private final String TAG = "IDLE_ASYNC_TASK";
-
     public IdleAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, IObserver o) {
         super(pendingResult, intent, recorder, context, o);
     }
 
     @Override
     protected String doInBackground(String... strings) {
-        Logger.Logging(LoggerLevel.INFOS, TAG, "CALLING STATE : IDLE");
+        Logger.Logging(LoggerLevel.INFOS, Constants.IDLE_ASYNC_TASK, "CALLING STATE : IDLE");
         RecorderConfiguration recorder = getRecorderConfiguration();
 
         if(recorder.getMediaRecorder() != null) {

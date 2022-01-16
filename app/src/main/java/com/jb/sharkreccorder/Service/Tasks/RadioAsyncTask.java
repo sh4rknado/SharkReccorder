@@ -23,7 +23,6 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     private File directory;
     private ArrayList<IObserver> observers;
     private RecorderConfiguration recorderConfiguration;
-    public final String TAG = "RadioAsyncTask";
 
     public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration configuration, Context context, IObserver o) {
         this.pendingResult = pendingResult;
@@ -36,41 +35,25 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
 
     //region PROPERTIES
 
-    public BroadcastReceiver.PendingResult getPendingResult() {
-        return pendingResult;
-    }
+    public BroadcastReceiver.PendingResult getPendingResult() { return pendingResult; }
 
-    public Intent getIntent() {
-        return intent;
-    }
+    public Intent getIntent() { return intent; }
 
-    public Context getContext() {
-        return context;
-    }
+    public Context getContext() { return context; }
 
-    public File getDirectory() {
-        return directory;
-    }
+    public File getDirectory() { return directory; }
 
-    public void setDirectory(File directory) {
-        this.directory = directory;
-    }
+    public void setDirectory(File directory) { this.directory = directory; }
 
-    public RecorderConfiguration getRecorderConfiguration() {
-        return recorderConfiguration;
-    }
+    public RecorderConfiguration getRecorderConfiguration() { return recorderConfiguration; }
 
-    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) {
-        this.recorderConfiguration = recorderConfiguration;
-    }
+    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) { this.recorderConfiguration = recorderConfiguration; }
 
     //endregion
 
     //region  ASYNC TASK
     @Override
-    protected String doInBackground(String... strings) {
-        return "";
-    }
+    protected String doInBackground(String... strings) { return ""; }
 
     @Override
     protected void onPostExecute(String s) {
@@ -88,18 +71,18 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
         if(!getDirectory().exists())
         {
             boolean success = getDirectory().mkdirs();
-            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "CREATE DIRECTORY RECORDER : " + success);
+            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "CREATE DIRECTORY RECORDER : " + success);
         }
 
         String audioFile = getDirectory().getAbsolutePath() + "/sharkRecorder-" + Constants.DATE + ".3gp";
-        Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RECORD FILE  : " + audioFile);
+        Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "RECORD FILE  : " + audioFile);
         this.recorderConfiguration.SetAudioFile(audioFile);
     }
 
     public void ResetRecorder() {
-        Logger.Logging(LoggerLevel.INFOS, TAG, "STOP RECORDING");
+        Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "STOP RECORDING");
         this.recorderConfiguration.Reset();
-        Logger.Logging(LoggerLevel.INFOS, TAG, "CLEAN RECORDER");
+        Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "CLEAN RECORDER");
     }
 
     //endregion

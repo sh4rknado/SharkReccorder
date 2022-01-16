@@ -24,40 +24,21 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
     private RecorderConfiguration recorderConfiguration;
 
     // Default Builder
-    public RadioReceiver() {
-
-    }
+    public RadioReceiver() { }
 
     //region PROPERTIES
-    public RecorderConfiguration getRecorderConfiguration() {
-        return recorderConfiguration;
-    }
+    public RecorderConfiguration getRecorderConfiguration() { return recorderConfiguration; }
 
     public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) { this.recorderConfiguration = recorderConfiguration; }
 
-    public boolean isWasRinging() {
-        return wasRinging;
-    }
+    public boolean isWasRinging() { return wasRinging; }
+    public void setWasRinging(boolean wasRinging) { this.wasRinging = wasRinging; }
 
-    public void setWasRinging(boolean wasRinging) {
-        this.wasRinging = wasRinging;
-    }
+    public boolean isRecordstarted() { return recordstarted; }
+    public void setRecordstarted(boolean recordstarted) { this.recordstarted = recordstarted; }
 
-    public boolean isRecordstarted() {
-        return recordstarted;
-    }
-
-    public void setRecordstarted(boolean recordstarted) {
-        this.recordstarted = recordstarted;
-    }
-
-    public MediaRecorder getRecorder() {
-        return recorder;
-    }
-
-    public void setRecorder(MediaRecorder recorder) {
-        this.recorder = recorder;
-    }
+    public MediaRecorder getRecorder() { return recorder; }
+    public void setRecorder(MediaRecorder recorder) { this.recorder = recorder; }
     //endregion
 
     @Override
