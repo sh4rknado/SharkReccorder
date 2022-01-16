@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 
@@ -108,7 +109,7 @@ public class RecorderConfiguration extends AModel {
             return mediaRecorder;
         }
         catch (Exception ex){
-            Logger.Logging(LoggerLevel.ERROR, "TAGGING", "Error when initialize MediaRecorder : " + ex.getMessage() + " with the reason : " + ex.getCause());
+            Logger.Logging(LoggerLevel.ERROR, Constants.RECORDER_CONFIG, "Error when initialize MediaRecorder : " + ex.getMessage() + " with the reason : " + ex.getCause());
             return null;
         }
     }
