@@ -1,12 +1,14 @@
 package com.jb.sharkreccorder.ViewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
-import com.jb.sharkreccorder.Model.*;
-import com.jb.sharkreccorder.Persistence.*;
+import com.jb.sharkreccorder.Model.AModel;
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
+import com.jb.sharkreccorder.Persistence.Repository;
+
 import java.util.List;
 
 

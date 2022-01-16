@@ -3,10 +3,8 @@ package com.jb.sharkreccorder.Service.Tasks;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaRecorder;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
-import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;

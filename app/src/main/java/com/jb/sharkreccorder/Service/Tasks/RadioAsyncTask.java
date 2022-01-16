@@ -3,9 +3,7 @@ package com.jb.sharkreccorder.Service.Tasks;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaRecorder;
 import android.os.AsyncTask;
-import android.os.Environment;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
@@ -16,7 +14,6 @@ import com.jb.sharkreccorder.Utils.Observer.ISujet;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Observer;
 
 public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> implements ISujet {
 

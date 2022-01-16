@@ -3,7 +3,9 @@ package com.jb.sharkreccorder.Model;
 import androidx.annotation.NonNull;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
 import com.google.gson.GsonBuilder;
+
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;

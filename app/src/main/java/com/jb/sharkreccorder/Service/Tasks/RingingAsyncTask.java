@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
-import android.media.browse.MediaBrowser;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 

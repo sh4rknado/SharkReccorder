@@ -1,6 +1,7 @@
 package com.jb.sharkreccorder.Utils.Logger;
 
 import android.util.Log;
+
 import com.jb.sharkreccorder.Utils.Constants;
 
 public class Logger {

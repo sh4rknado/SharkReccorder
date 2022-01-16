@@ -1,13 +1,15 @@
 package com.jb.sharkreccorder.ViewModel;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import com.jb.sharkreccorder.Model.*;
+
+import com.jb.sharkreccorder.Model.AModel;
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
+
 import java.util.List;
 import java.util.Objects;
-import java.util.Observer;
 
 public class RecorderConfigurationViewModel extends AViewModel {
 

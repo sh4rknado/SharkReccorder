@@ -1,9 +1,12 @@
 package com.jb.sharkreccorder.View.Adapters;
 
 import android.view.ViewGroup;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 import com.jb.sharkreccorder.View.Holders.AHolder;
+
 import java.util.ArrayList;
 import java.util.List;
 

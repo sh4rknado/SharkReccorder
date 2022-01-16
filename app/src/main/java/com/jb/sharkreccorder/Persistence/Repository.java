@@ -4,10 +4,9 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 
-import com.jb.sharkreccorder.Model.*;
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
+
 import java.util.List;
 
 public class Repository {

@@ -10,14 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
 import androidx.annotation.NonNull;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
+import com.jb.sharkreccorder.R;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 import com.jb.sharkreccorder.View.Holders.AHolder;
-import com.jb.sharkreccorder.R;
 
 import java.util.HashMap;
 import java.util.Map;

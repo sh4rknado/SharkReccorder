@@ -1,4 +1,5 @@
 package com.jb.sharkreccorder.Model;
+
 import android.media.MediaRecorder;
 
 import androidx.room.ColumnInfo;
@@ -7,8 +8,6 @@ import androidx.room.Ignore;
 
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
-
-import java.io.File;
 
 @Entity(tableName = "recorder_configurations")
 public class RecorderConfiguration extends AModel {

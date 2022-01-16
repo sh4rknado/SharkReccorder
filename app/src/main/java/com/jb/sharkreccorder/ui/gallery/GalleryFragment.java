@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.jb.sharkreccorder.R;
 import com.jb.sharkreccorder.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {

@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.jb.sharkreccorder.Model.*;
+import com.jb.sharkreccorder.Model.RecorderConfiguration;
 
 @androidx.room.Database(entities = {RecorderConfiguration.class}, version = 1)
 public abstract class Database extends RoomDatabase {

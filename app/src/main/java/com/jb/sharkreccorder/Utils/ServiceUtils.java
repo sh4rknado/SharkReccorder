@@ -1,7 +1,6 @@
 package com.jb.sharkreccorder.Utils;
 
 import android.app.ActivityManager;
-import android.content.Context;
 
 public class ServiceUtils {
 
