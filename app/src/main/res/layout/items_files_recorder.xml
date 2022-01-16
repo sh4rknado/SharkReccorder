@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:checkable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/shadow_background"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btn_caller"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_caller"
+            android:contentDescription="@string/caller_img" />
+
+        <ImageView
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/img_call_type"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_call_out" />
+
+        <TextView
+            android:id="@+id/textview_caller_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/img_call_type"
+            android:layout_marginStart="40dp"
+            android:maxLines="1"
+            android:text="CALLER NAME"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_below="@+id/textview_caller_name"
+            android:layout_marginStart="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 day ago" />
+
+            <TextView
+                android:id="@+id/textview_hours"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23h59" />
+
+            <TextView
+                android:id="@+id/textview_duration"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(05:34)" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

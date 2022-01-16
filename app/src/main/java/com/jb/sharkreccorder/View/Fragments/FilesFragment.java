@@ -27,8 +27,7 @@ public class FilesFragment extends AFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.filesViewModels =  new ViewModelProvider(this).get(FileRecorderViewModel.class);
-        this.root = inflater.inflate(R.layout.settings_recorder_fragment, container, false);
-
+        this.root = inflater.inflate(R.layout.files_recorder_fragment, container, false);
         this.adapter = new FileRecorderAdapter();
 
         RecyclerView recyclerView = this.root.findViewById(R.id.recycle_view_files);

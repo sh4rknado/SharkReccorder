@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.jb.sharkreccorder.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_files"
+        android:name="com.jb.sharkreccorder.View.Fragments.FilesFragment"
+        android:label="@string/menu_files"
+        tools:layout="@layout/items_files_recorder" />
 
     <fragment
         android:id="@+id/nav_settings"

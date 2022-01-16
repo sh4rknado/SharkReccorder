@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/fragment_files"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_files"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Fragments.FilesFragment">
@@ -10,6 +11,6 @@
         android:id="@+id/recycle_view_files"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/files_recorder_layout" />
+        tools:listitem="@layout/items_files_recorder" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

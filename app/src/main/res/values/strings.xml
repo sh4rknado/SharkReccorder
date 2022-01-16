@@ -8,12 +8,13 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="format_audio">choisissez le type de fichier à enregistrer</string>
     <string name="audio_source">Selectionnez d\'où viens l\'audio</string>
     <string name="menu_settings">Settings</string>
     <string name="auto_start">enregistrement automatique</string>
+    <string name="menu_files">Files Recording</string>
+    <string name="caller_img">caller_img</string>
 
     <string-array name="audio_formats">
         <item>DEFAULT</item>

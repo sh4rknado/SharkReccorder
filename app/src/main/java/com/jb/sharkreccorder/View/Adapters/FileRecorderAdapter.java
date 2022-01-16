@@ -9,7 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -27,11 +30,6 @@ import java.util.Map;
 public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAdapter.FileRecorderHolder> {
 
     private FilesRecorder filesRecorder;
-    private String[] output_formats;
-    private String[] audio_sources;
-    private Map<String, Integer> audioSourceDictionary;
-    private Map<String, Integer> outputFormatDictionary;
-    private Map<String, Integer> audioEncoderDictionary;
 
     public FileRecorderAdapter() { super(); }
 
@@ -46,8 +44,6 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
 
     @Override
     public void onBindViewHolder(@NonNull FileRecorderHolder holder, int position) {
-        this.output_formats = this.parent.getResources().getStringArray(R.array.audio_formats);
-        this.audio_sources = this.parent.getResources().getStringArray(R.array.audio_sources);
 
         ArrayAdapter<? extends String> output_format_adapter = new ArrayAdapter<>(this.parent.getContext(), R.layout.combobox_item, output_formats);
         holder.output_format.setAdapter(output_format_adapter);
@@ -63,11 +59,11 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
         int index = -1;
         switch (key){
             case "audio_source":
-                index = audioSourceDictionary.get(value);
+                // index = audioSourceDictionary.get(value);
                 // this.filesRecorder.setAudioSource(index);
                 break;
             case "output_format":
-                index = outputFormatDictionary.get(value);
+                // index = outputFormatDictionary.get(value);
                 // this.filesRecorder.setOutputFormat(index);
                 break;
             case "auto_start":
@@ -79,37 +75,30 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
 
     static class FileRecorderHolder extends AHolder  {
 
-        private final AutoCompleteTextView output_format;
-        private final AutoCompleteTextView audio_source;
-        private final Switch auto_start;
+        private final ImageButton btn_caller;
+        private final ImageView img_call_type;
+        private final TextView textView_caller_name;
+        private final TextView textView_date;
+        private final TextView textView_hours;
+        private final TextView textView_duration;
 
         public FileRecorderHolder(View itemView, IObserver o) {
             super(itemView, o);
 
-            this.output_format = itemView.findViewById(R.id.combobox_output_format);
-            this.audio_source = itemView.findViewById(R.id.combobox_audio_source);
-            this.auto_start = itemView.findViewById(R.id.auto_start_switch);
+            this.btn_caller = itemView.findViewById(R.id.btn_caller);
+            this.img_call_type = itemView.findViewById(R.id.img_call_type);
+            this.textView_caller_name = itemView.findViewById(R.id.textview_caller_name);
+            this.textView_date = itemView.findViewById(R.id.textview_date);
+            this.textView_hours = itemView.findViewById(R.id.textview_hours);
+            this.textView_duration = itemView.findViewById(R.id.textview_duration);
 
-            this.auto_start.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            this.btn_caller.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    update("auto_start", auto_start.isChecked());
+                public void onClick(View view) {
+                    
                 }
             });
 
-            this.audio_source.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    update("audio_source", parent.getAdapter().getItem(position).toString());
-                }
-            });
-
-            this.output_format.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    update("output_format", parent.getAdapter().getItem(position).toString());
-                }
-            });
 
         }
 
