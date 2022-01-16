@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
@@ -33,16 +34,16 @@ public class RadioService extends Service {
 
     private void InitializeRecorder() {
         RecorderConfigurationViewModel rcViewModel = new RecorderConfigurationViewModel(this.getApplication());
-        RecorderConfiguration recorderConfig = rcViewModel.getFirstConfigurations();
-
-        // Set default configuration
-        if(recorderConfig == null)
-        {
-            recorderConfiguration = new RecorderConfiguration(7, 3, 1, 100, true, 1, 128000, 48000);
-            rcViewModel.insert(recorderConfiguration, RecorderConfiguration.class);
-        }
-        else
-            this.recorderConfiguration = recorderConfig;
+        LiveData<RecorderConfiguration> recorderConfig = rcViewModel.getFirstConfigurations();
+        recorderConfig.observeForever(new Observer<RecorderConfiguration>() {
+            @Override
+            public void onChanged(RecorderConfiguration config) {
+                if (config != null) {
+                    recorderConfiguration = config;
+                    receiver.setRecorderConfiguration(recorderConfiguration);
+                }
+            }
+        });
     }
 
     @Override
@@ -64,7 +65,6 @@ public class RadioService extends Service {
         filter.addAction(Constants.ACTION_OUT);
         filter.addAction(Constants.ACTION_IN);
         this.receiver = new RadioReceiver();
-        this.receiver.setRecorderConfiguration(recorderConfiguration);
         this.registerReceiver(this.receiver, filter);
 
         return Service.START_STICKY;

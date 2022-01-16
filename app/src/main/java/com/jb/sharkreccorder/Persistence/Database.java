@@ -48,14 +48,8 @@ public abstract class Database extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
-
-
-            // Populate FilesRecorder
-//            dao.insertFileRecorder(new FileRecorder(new File(Environment.getExternalStorageDirectory() + "/SharkRecorder/test_1.mp3"), true, new Date()));
-//            dao.insertFileRecorder(new FileRecorder(new File(Environment.getExternalStorageDirectory() + "/SharkRecorder/test_2.mp3"), true, new Date()));
-//            dao.insertFileRecorder(new FileRecorder(new File(Environment.getExternalStorageDirectory() + "/SharkRecorder/test_3.mp3"), true, new Date()));
-
-
+            RecorderConfiguration recorderConfiguration = new RecorderConfiguration(7, 3, 1, 100, true, 1, 128000, 48000);
+            dao.insertRecorderConfiguration(recorderConfiguration);
 
             return null;
         }

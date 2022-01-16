@@ -27,7 +27,7 @@ public interface IDao {
     LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations();
 
     @Query("SELECT * FROM recorder_configurations LIMIT 1")
-    LiveData<List<RecorderConfiguration>> getCurrentConfiguration();
+    LiveData<RecorderConfiguration> getCurrentConfiguration();
 
     @Query("SELECT auto_start FROM recorder_configurations")
     boolean getAutoStartConfiguration();

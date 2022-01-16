@@ -14,7 +14,7 @@ public class Repository {
 
     private IDao dao;
     private final LiveData<List<RecorderConfiguration>> recorderConfigurations;
-    private final RecorderConfiguration currentConfigurations;
+    private final LiveData<RecorderConfiguration> currentConfigurations;
 
     public Repository(Application application) {
         Database database = Database.getInstance(application);
@@ -28,16 +28,9 @@ public class Repository {
     public void deleteRecorderConfiguration(RecorderConfiguration s) { new DeleteRecorderConfigurationAsyncTask(dao).execute(s); }
     public void deleteAllRecorderConfiguration() { new DeleteAllRecorderConfigurationAsyncTask(dao); }
     public LiveData<List<RecorderConfiguration>> getAllRecorderConfigurations() { return recorderConfigurations; }
-    public RecorderConfiguration getCurrentConfiguration() { return currentConfigurations; }
+    public LiveData<RecorderConfiguration> getCurrentConfiguration() { return currentConfigurations; }
 
-    private RecorderConfiguration fetchCurrentConfigurations() {
-        List<RecorderConfiguration> configs = dao.getCurrentConfiguration().getValue();
-
-        if(configs == null || configs.isEmpty())
-            return null;
-
-        return configs.get(0);
-    }
+    private LiveData<RecorderConfiguration> fetchCurrentConfigurations() { return dao.getCurrentConfiguration(); }
 
     private static class InsertRecorderConfigurationAsyncTask extends AsyncTask<RecorderConfiguration, Void, Void> {
         private IDao dao;

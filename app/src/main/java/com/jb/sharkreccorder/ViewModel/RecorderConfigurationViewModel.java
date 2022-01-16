@@ -36,7 +36,7 @@ public class RecorderConfigurationViewModel extends AViewModel {
         }
     }
 
-    public RecorderConfiguration getFirstConfigurations() {
+    public LiveData<RecorderConfiguration> getFirstConfigurations() {
        return repository.getCurrentConfiguration();
     }
 

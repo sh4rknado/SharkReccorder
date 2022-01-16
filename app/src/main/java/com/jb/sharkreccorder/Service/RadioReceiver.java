@@ -33,9 +33,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
         return recorderConfiguration;
     }
 
-    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) {
-        this.recorderConfiguration = recorderConfiguration;
-    }
+    public void setRecorderConfiguration(RecorderConfiguration recorderConfiguration) { this.recorderConfiguration = recorderConfiguration; }
 
     public boolean isWasRinging() {
         return wasRinging;
@@ -64,6 +62,12 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        if(recorderConfiguration == null) {
+            Logger.Logging(LoggerLevel.ERROR, Constants.RADIO_TAG, "Error RecorderConfiguration is not initialized");
+            return;
+        }
+
         final String state = GetAction(intent);
         final PendingResult pendingResult = goAsync();
 
