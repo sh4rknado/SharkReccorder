@@ -7,6 +7,8 @@ import android.os.StatFs;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.File;
+
 public class ExternalStorageUtils {
 
     // Check whether the external storage is mounted or not.
@@ -46,10 +48,27 @@ public class ExternalStorageUtils {
         return "";
     }
 
-    // Get public external storage base directory.
-    public static String getPublicExternalStorageBaseDir(String dirType) {
+    public static String getPublicExternalStorageBaseDir(Context context) {
         if(isExternalStorageMounted()) {
-            return Environment.getExternalStoragePublicDirectory(dirType).getAbsolutePath();
+            return context.getExternalFilesDir(null).getAbsolutePath();
+        }
+        return "";
+    }
+
+    // Get public external storage base directory.
+    public static File tryGetPublicExternalStorageBaseDir(Context context) throws Exception {
+        String path = getPublicExternalStorageBaseDir(context);
+        File file = new File(path, "SharkRecorder");
+
+        if(!file.exists() && !file.mkdirs())
+            throw new Exception("Cannot create file : " + file.getAbsolutePath());
+        else
+            return file;
+    }
+
+    public static String getExternalStorageBaseDir(String dirType, Context context) {
+        if(isExternalStorageMounted()) {
+            return context.getExternalFilesDir(dirType).getAbsolutePath();
         }
         return "";
     }

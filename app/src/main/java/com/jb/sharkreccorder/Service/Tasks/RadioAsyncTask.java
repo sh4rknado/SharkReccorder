@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
+import com.jb.sharkreccorder.Utils.ExternalStorageUtils;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
@@ -24,14 +25,16 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     private ArrayList<IObserver> observers;
     private RecorderConfiguration recorderConfiguration;
 
-    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration configuration, Context context, IObserver o) {
+    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration configuration, Context context, File dir, IObserver o) {
         this.pendingResult = pendingResult;
         this.intent = intent;
         this.context = context;
         this.observers = new ArrayList<>();
         this.recorderConfiguration = configuration;
+        this.directory = dir;
         this.register(o);
     }
+
 
     //region PROPERTIES
 
@@ -66,15 +69,7 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     //region MEDIA RECORDER
 
     public void SetAudioFile() {
-         this.directory = new File(getContext().getFilesDir(), "SharkRecorder");
-
-        if(!getDirectory().exists())
-        {
-            boolean success = getDirectory().mkdirs();
-            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "CREATE DIRECTORY RECORDER : " + success);
-        }
-
-        String audioFile = getDirectory().getAbsolutePath() + "/sharkRecorder-" + Constants.DATE + ".3gp";
+        String audioFile = this.directory.getAbsolutePath() + "/sharkRecorder-" + Constants.DATE + ".3gp";
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "RECORD FILE  : " + audioFile);
         this.recorderConfiguration.SetAudioFile(audioFile);
     }

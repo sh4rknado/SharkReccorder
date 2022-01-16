@@ -1,6 +1,7 @@
 package com.jb.sharkreccorder.Service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
@@ -63,7 +64,7 @@ public class RadioService extends Service {
         final IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_OUT);
         filter.addAction(Constants.ACTION_IN);
-        this.receiver = new RadioReceiver();
+        this.receiver = new RadioReceiver(getApplicationContext());
         this.registerReceiver(this.receiver, filter);
 
         return Service.START_STICKY;

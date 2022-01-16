@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 
 import java.util.List;
@@ -32,6 +33,21 @@ public interface IDao {
 
     @Query("SELECT auto_start FROM recorder_configurations")
     boolean getAutoStartConfiguration();
+
+    //endregion
+
+    //region RecorderConfiguration
+    @Insert
+    void insertFilesRecorder(FilesRecorder files);
+
+    @Delete
+    void deleteFileRecorder(FilesRecorder files);
+
+    @Query("DELETE FROM files_recorder")
+    void deleteAllFilesRecorder();
+
+    @Query("SELECT * FROM files_recorder")
+    LiveData<List<FilesRecorder>> getAllFilesRecorder();
 
     //endregion
 

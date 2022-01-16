@@ -14,13 +14,15 @@
         <entry key="app/src/main/res/layout/combobox.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/combobox_item.xml" value="0.3319746376811594" />
         <entry key="app/src/main/res/layout/combobox_output_format.xml" value="0.11018518518518519" />
+        <entry key="app/src/main/res/layout/files_recorder_fragment.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/layout/files_recorder_layout.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.11018518518518519" />
         <entry key="app/src/main/res/layout/settings_fragments.xml" value="0.12864583333333332" />
         <entry key="app/src/main/res/layout/settings_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/settings_reccorder_fragment.xml" value="0.12864583333333332" />
         <entry key="app/src/main/res/layout/settings_reccorder_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/settings_recorder_fragment.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/settings_recorder_layout.xml" value="0.24185463659147868" />
+        <entry key="app/src/main/res/layout/settings_recorder_layout.xml" value="0.75" />
         <entry key="app/src/main/res/layout/settings_storage_layout.xml" value="0.35260416666666666" />
       </map>
     </option>

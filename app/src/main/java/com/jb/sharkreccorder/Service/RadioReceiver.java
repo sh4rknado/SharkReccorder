@@ -12,19 +12,34 @@ import com.jb.sharkreccorder.Service.Tasks.IdleAsyncTask;
 import com.jb.sharkreccorder.Service.Tasks.OffHookAsyncTask;
 import com.jb.sharkreccorder.Service.Tasks.RingingAsyncTask;
 import com.jb.sharkreccorder.Utils.Constants;
+import com.jb.sharkreccorder.Utils.ExternalStorageUtils;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 
+import java.io.File;
+
 public class RadioReceiver extends BroadcastReceiver implements IObserver {
 
+    private Context context;
     private boolean wasRinging = false;
     private boolean recordstarted = false;
     private MediaRecorder recorder;
     private RecorderConfiguration recorderConfiguration;
+    private File externalDirectory;
 
     // Default Builder
-    public RadioReceiver() { }
+    public RadioReceiver(Context _context) {
+        context = _context;
+
+        try {
+            this.externalDirectory = ExternalStorageUtils.tryGetPublicExternalStorageBaseDir(context);
+            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "CREATE FILE : " + externalDirectory.getAbsolutePath());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.Logging(LoggerLevel.ERROR, Constants.RADIO_TAG, "ERROR WHEN CREATE FILE : " + ex.getMessage());
+        }
+    }
 
     //region PROPERTIES
     public RecorderConfiguration getRecorderConfiguration() { return recorderConfiguration; }
@@ -60,7 +75,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(!isWasRinging()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setWasRinging(true);
-                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
+                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
                     ringingTask.execute();
                 }
             break;
@@ -68,7 +83,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(!isRecordstarted()) {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setRecordstarted(true);
-                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
+                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
                     offHookTask.execute();
                 }
                 break;
@@ -76,7 +91,7 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
                 if(isRecordstarted())
                 {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, this);
+                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
                     idleTask.execute();
                     setRecordstarted(false);
                 }

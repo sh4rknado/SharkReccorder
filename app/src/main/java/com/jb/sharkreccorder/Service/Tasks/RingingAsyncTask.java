@@ -13,10 +13,12 @@ import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 
+import java.io.File;
+
 public class RingingAsyncTask extends RadioAsyncTask {
 
-    public RingingAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, IObserver o) {
-        super(pendingResult, intent, recorder, context, o);
+    public RingingAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration recorder, Context context, File dir, IObserver o) {
+        super(pendingResult, intent, recorder, context, dir, o);
     }
 
     @Override
