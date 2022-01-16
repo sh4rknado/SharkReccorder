@@ -98,7 +98,9 @@ public class RecorderConfiguration extends AModel {
     public boolean isAuto_start() { return auto_start; }
     public void setAuto_start(boolean current) { auto_start = current; }
 
-    public MediaRecorder getMediaRecorder() {
+    public MediaRecorder getCurrentMediaRecorder() { return mediaRecorder; }
+
+    public MediaRecorder getMediaRecorderInitialized() {
         try {
             this.mediaRecorder.setAudioSource(audioSource);
             this.mediaRecorder.setOutputFormat(outputFormat);
@@ -109,6 +111,7 @@ public class RecorderConfiguration extends AModel {
             return mediaRecorder;
         }
         catch (Exception ex){
+            ex.printStackTrace();
             Logger.Logging(LoggerLevel.ERROR, Constants.RECORDER_CONFIG, "Error when initialize MediaRecorder : " + ex.getMessage() + " with the reason : " + ex.getCause());
             return null;
         }
@@ -135,8 +138,8 @@ public class RecorderConfiguration extends AModel {
 
     public void Reset(){
         this.mediaRecorder.stop();
-        this.mediaRecorder.reset();   // You can reuse the object by going back to setAudioSource() step
-        this.mediaRecorder.release(); // Now the object cannot be reused
+        // this.mediaRecorder.reset();   // You can reuse the object by going back to setAudioSource() step
+        //this.mediaRecorder.release(); // Now the object cannot be reused
     }
 
 }

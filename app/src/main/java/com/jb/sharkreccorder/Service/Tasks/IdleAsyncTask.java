@@ -22,7 +22,7 @@ public class IdleAsyncTask extends RadioAsyncTask {
         Logger.Logging(LoggerLevel.INFOS, Constants.IDLE_ASYNC_TASK, "CALLING STATE : IDLE");
         RecorderConfiguration recorder = getRecorderConfiguration();
 
-        if(recorder.getMediaRecorder() != null) {
+        if(recorder.getCurrentMediaRecorder() != null) {
             ResetRecorder();
         }
         return "STOP RECORDING";

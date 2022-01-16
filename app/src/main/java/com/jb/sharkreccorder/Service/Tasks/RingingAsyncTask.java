@@ -32,7 +32,7 @@ public class RingingAsyncTask extends RadioAsyncTask {
         Logger.Logging(LoggerLevel.INFOS, Constants.RINGING_ASYNC, "INITIALIZE RECORDER");
 
         this.SetAudioFile();
-        MediaRecorder recorder = getRecorderConfiguration().getMediaRecorder();
+        MediaRecorder recorder = getRecorderConfiguration().getMediaRecorderInitialized();
 
         try {
             recorder.prepare();
