@@ -7,8 +7,16 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 
 import com.jb.sharkreccorder.Utils.Constants;
+import com.jb.sharkreccorder.Utils.Converters.DateConverter;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
+
+import org.apache.commons.net.io.Util;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "recorder_configurations")
 public class RecorderConfiguration extends AModel {
@@ -71,6 +79,10 @@ public class RecorderConfiguration extends AModel {
 
     @Ignore
     private MediaRecorder mediaRecorder;
+
+    @Ignore
+    private FilesRecorder filesRecorder;
+
     //endregion
 
     //region PROPERTIES
@@ -118,6 +130,9 @@ public class RecorderConfiguration extends AModel {
     }
     public void setMediaRecorder(MediaRecorder mediaRecorder) { this.mediaRecorder = mediaRecorder; }
 
+    public FilesRecorder getFilesRecorder() { return filesRecorder; }
+    public void setFilesRecorder(FilesRecorder filesRecorder) { this.filesRecorder = filesRecorder; }
+
     //endregion
 
     public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains, boolean auto_start, int audio_channel, int encoding_rate, int sample_rate) {
@@ -130,14 +145,32 @@ public class RecorderConfiguration extends AModel {
         this.encoding_rate = encoding_rate;
         this.sample_rate = sample_rate;
         this.mediaRecorder =  new MediaRecorder();
+        this.filesRecorder = new FilesRecorder();
+    }
+
+    @Ignore
+    public RecorderConfiguration(int audioSource, int outputFormat, int audioEncoder, int gains, boolean auto_start, int audio_channel, int encoding_rate, int sample_rate, FilesRecorder file) {
+        this.audioSource = audioSource;
+        this.outputFormat = outputFormat;
+        this.audioEncoder = audioEncoder;
+        this.gains = gains;
+        this.auto_start = auto_start;
+        this.audio_channel = audio_channel;
+        this.encoding_rate = encoding_rate;
+        this.sample_rate = sample_rate;
+        this.mediaRecorder =  new MediaRecorder();
+        this.filesRecorder = file;
     }
 
     public  void SetAudioFile(String file) {
         this.mediaRecorder.setOutputFile(file);
+        this.filesRecorder.setPath(file);
+        this.filesRecorder.setDate_start(DateConverter.GetDateNow());
     }
 
     public void Reset(){
         this.mediaRecorder.stop();
+        this.filesRecorder.setDate_end(DateConverter.GetDateNow());
         // this.mediaRecorder.reset();   // You can reuse the object by going back to setAudioSource() step
         //this.mediaRecorder.release(); // Now the object cannot be reused
     }

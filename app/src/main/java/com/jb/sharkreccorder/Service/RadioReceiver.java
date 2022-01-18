@@ -7,6 +7,8 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 
+import com.jb.sharkreccorder.Model.CallType;
+import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Service.Tasks.IdleAsyncTask;
 import com.jb.sharkreccorder.Service.Tasks.OffHookAsyncTask;
@@ -16,6 +18,7 @@ import com.jb.sharkreccorder.Utils.ExternalStorageUtils;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
+import com.jb.sharkreccorder.ViewModel.FileRecorderViewModel;
 
 import java.io.File;
 
@@ -25,19 +28,21 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
     private boolean wasRinging = false;
     private boolean recordstarted = false;
     private MediaRecorder recorder;
+    private FileRecorderViewModel fileRecorderViewModel;
     private RecorderConfiguration recorderConfiguration;
     private File externalDirectory;
 
     // Default Builder
-    public RadioReceiver(Context _context) {
+    public RadioReceiver(Context _context, FileRecorderViewModel files) {
         context = _context;
+        fileRecorderViewModel = files;
 
         try {
             this.externalDirectory = ExternalStorageUtils.tryGetPublicExternalStorageBaseDir(context);
-            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "CREATE FILE : " + externalDirectory.getAbsolutePath());
+            Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "CREATE FOLDER : " + externalDirectory.getAbsolutePath());
         } catch (Exception ex) {
             ex.printStackTrace();
-            Logger.Logging(LoggerLevel.ERROR, Constants.RADIO_TAG, "ERROR WHEN CREATE FILE : " + ex.getMessage());
+            Logger.Logging(LoggerLevel.ERROR, Constants.RADIO_TAG, "ERROR WHEN CREATE FOLDER : " + ex.getMessage());
         }
     }
 
@@ -70,28 +75,43 @@ public class RadioReceiver extends BroadcastReceiver implements IObserver {
         if(state == null)
             return;
 
+        final String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+
         switch (state) {
             case Constants.RINGING:
                 if(!isWasRinging()) {
+                    recorderConfiguration.getFilesRecorder().setCaller_name(phoneNumber);
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setWasRinging(true);
-                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
+                    RingingAsyncTask ringingTask = new RingingAsyncTask(pendingResult, intent, fileRecorderViewModel, recorderConfiguration, context, externalDirectory,this);
                     ringingTask.execute();
                 }
             break;
             case Constants.OFFHOOK:
+
+                // CALLING OUT
+                if(!isWasRinging())
+                    recorderConfiguration.getFilesRecorder().setCall_type(CallType.OUTPUT);
+
                 if(!isRecordstarted()) {
+                    // CALL ANSWERED
+                    recorderConfiguration.getFilesRecorder().setCall_type(CallType.INPUT);
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
                     setRecordstarted(true);
-                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
+                    OffHookAsyncTask offHookTask = new OffHookAsyncTask(pendingResult, intent, fileRecorderViewModel, recorderConfiguration, context, externalDirectory,this);
                     offHookTask.execute();
                 }
                 break;
             case Constants.IDLE:
+
+                // MISSING CALL
+                if(wasRinging && !isRecordstarted())
+                    recorderConfiguration.getFilesRecorder().setCall_type(CallType.MISSING);
+
                 if(isRecordstarted())
                 {
                     Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_TAG, "RADIO STATE : " + state);
-                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, getRecorderConfiguration(), context, externalDirectory,this);
+                    IdleAsyncTask idleTask = new IdleAsyncTask(pendingResult, intent, fileRecorderViewModel, recorderConfiguration, context, externalDirectory,this);
                     idleTask.execute();
                     setRecordstarted(false);
                 }

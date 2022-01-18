@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class AModel {
+public abstract class AModel implements ICloneable {
 
     @Ignore
     private boolean isSelected;
@@ -54,6 +54,14 @@ public abstract class AModel {
     public static List<String>  ConvertToListString(String json, Type type) {
         return new GsonBuilder().create().fromJson(json, type);
     }
+
+    //endregion
+
+    //region CLONEABLE
+
+    public AModel Clone() { return null; }
+
+    public void CopyFrom(AModel model) { }
 
     //endregion
 

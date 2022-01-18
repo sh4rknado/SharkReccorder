@@ -1,5 +1,6 @@
 package com.jb.sharkreccorder.View.Adapters;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.view.LayoutInflater;
@@ -15,7 +16,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.jb.sharkreccorder.Model.CallType;
 import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.R;
@@ -24,12 +27,11 @@ import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 import com.jb.sharkreccorder.View.Holders.AHolder;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAdapter.FileRecorderHolder> {
-
-    private FilesRecorder filesRecorder;
 
     public FileRecorderAdapter() { super(); }
 
@@ -37,20 +39,14 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
     @Override
     public FileRecorderAdapter.FileRecorderHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.parent = parent;
-        filesRecorder = this.models.get(0);
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_recorder_layout, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_files_recorder, parent, false);
         return new FileRecorderAdapter.FileRecorderHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FileRecorderHolder holder, int position) {
-
-        ArrayAdapter<? extends String> output_format_adapter = new ArrayAdapter<>(this.parent.getContext(), R.layout.combobox_item, output_formats);
-        holder.output_format.setAdapter(output_format_adapter);
-
-        ArrayAdapter<? extends String> audio_sources_adapter = new ArrayAdapter<>(this.parent.getContext(), R.layout.combobox_item, audio_sources);
-        holder.audio_source.setAdapter(audio_sources_adapter);
-
+        FilesRecorder currentFile = models.get(position);
+        holder.FillValues(currentFile);
         this.modelHolders.add(holder);
     }
 
@@ -95,10 +91,33 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
             this.btn_caller.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+
                 }
             });
 
+        }
+
+        public void FillValues(FilesRecorder file) {
+
+            Context context =  this.itemView.getContext();
+            Date date = file.getDateTime_start();
+
+            switch (file.getCall_type()){
+                case CallType.MISSING:
+                    this.img_call_type.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_call_missed));
+                    break;
+                case CallType.INPUT:
+                    this.img_call_type.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_call_received));
+                    break;
+                case CallType.OUTPUT:
+                    this.img_call_type.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_call_out));
+                    break;
+            }
+
+            this.textView_caller_name.setText(file.getCaller_name());
+            this.textView_date.setText("TODO");
+            this.textView_hours.setText(date.getHours() + " : " + date.getMinutes());
+            this.textView_duration.setText("TODO");
 
         }
 

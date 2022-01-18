@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "69ee854bc919815692fd27ca20ed06bc",
+    "identityHash": "9164d1c08e3284d2585ad2972818cd58",
     "entities": [
       {
         "tableName": "recorder_configurations",
@@ -74,13 +74,37 @@
       },
       {
         "tableName": "files_recorder",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`file_path` TEXT, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`file_path` TEXT, `caller_name` TEXT, `date_start` TEXT, `date_end` TEXT, `call_type` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "path",
             "columnName": "file_path",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "caller_name",
+            "columnName": "caller_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date_start",
+            "columnName": "date_start",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date_end",
+            "columnName": "date_end",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "call_type",
+            "columnName": "call_type",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "id",
@@ -102,7 +126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '69ee854bc919815692fd27ca20ed06bc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9164d1c08e3284d2585ad2972818cd58')"
     ]
   }
 }

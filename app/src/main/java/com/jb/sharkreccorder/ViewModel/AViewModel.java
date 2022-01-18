@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.jb.sharkreccorder.Model.AModel;
+import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Persistence.Repository;
 
@@ -28,6 +29,10 @@ public class AViewModel extends AndroidViewModel {
 
         if (RecorderConfiguration.class.equals(cls))
             repository.insertRecorderConfiguration((RecorderConfiguration) model);
+
+        if(FilesRecorder.class.equals(cls))
+            repository.insertFilesConfiguration((FilesRecorder) model);
+
     }
 
     public void delete(AModel model, Class<?> cls) {
@@ -37,6 +42,9 @@ public class AViewModel extends AndroidViewModel {
 
         if (RecorderConfiguration.class.equals(cls))
             repository.deleteRecorderConfiguration((RecorderConfiguration) model);
+
+        if(FilesRecorder.class.equals(cls))
+            repository.deleteFilesConfiguration((FilesRecorder) model);
 
     }
 
@@ -48,6 +56,9 @@ public class AViewModel extends AndroidViewModel {
 
         if (RecorderConfiguration.class.equals(cls))
             repository.deleteAllRecorderConfiguration();
+
+        if(FilesRecorder.class.equals(cls))
+            repository.deleteAllFilesConfiguration();
 
     }
 

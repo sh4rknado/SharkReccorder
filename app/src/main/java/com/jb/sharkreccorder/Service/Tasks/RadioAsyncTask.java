@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.ExternalStorageUtils;
@@ -12,6 +13,7 @@ import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
 import com.jb.sharkreccorder.Utils.Observer.ISujet;
+import com.jb.sharkreccorder.ViewModel.FileRecorderViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,13 +25,18 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
     private final Context context;
     private File directory;
     private ArrayList<IObserver> observers;
+    private FileRecorderViewModel fileRecorderViewModel;
     private RecorderConfiguration recorderConfiguration;
 
-    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, RecorderConfiguration configuration, Context context, File dir, IObserver o) {
+
+    public RadioAsyncTask(BroadcastReceiver.PendingResult pendingResult, Intent intent, FileRecorderViewModel filesVM,
+                          RecorderConfiguration configuration, Context context, File dir, IObserver o)
+    {
         this.pendingResult = pendingResult;
         this.intent = intent;
         this.context = context;
         this.observers = new ArrayList<>();
+        this.fileRecorderViewModel = filesVM;
         this.recorderConfiguration = configuration;
         this.directory = dir;
         this.register(o);
@@ -78,6 +85,7 @@ public abstract class RadioAsyncTask extends AsyncTask<String, Integer, String> 
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "STOP RECORDING");
         this.recorderConfiguration.Reset();
         Logger.Logging(LoggerLevel.INFOS, Constants.RADIO_ASYNC, "CLEAN RECORDER");
+        fileRecorderViewModel.insert(new FilesRecorder(recorderConfiguration.getFilesRecorder()), FilesRecorder.class);
     }
 
     //endregion

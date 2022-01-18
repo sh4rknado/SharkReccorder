@@ -14,6 +14,7 @@ import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.Utils.Constants;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
+import com.jb.sharkreccorder.ViewModel.FileRecorderViewModel;
 import com.jb.sharkreccorder.ViewModel.RecorderConfigurationViewModel;
 
 public class RadioService extends Service {
@@ -35,6 +36,7 @@ public class RadioService extends Service {
     private void InitializeRecorder() {
         RecorderConfigurationViewModel rcViewModel = new RecorderConfigurationViewModel(this.getApplication());
         LiveData<RecorderConfiguration> recorderConfig = rcViewModel.getFirstConfigurations();
+
         recorderConfig.observeForever(new Observer<RecorderConfiguration>() {
             @Override
             public void onChanged(RecorderConfiguration config) {
@@ -64,7 +66,8 @@ public class RadioService extends Service {
         final IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_OUT);
         filter.addAction(Constants.ACTION_IN);
-        this.receiver = new RadioReceiver(getApplicationContext());
+
+        this.receiver = new RadioReceiver(getApplicationContext(),new FileRecorderViewModel(getApplication()));
         this.registerReceiver(this.receiver, filter);
 
         return Service.START_STICKY;
