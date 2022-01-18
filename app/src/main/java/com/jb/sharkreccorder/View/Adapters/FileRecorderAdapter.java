@@ -22,6 +22,7 @@ import com.jb.sharkreccorder.Model.CallType;
 import com.jb.sharkreccorder.Model.FilesRecorder;
 import com.jb.sharkreccorder.Model.RecorderConfiguration;
 import com.jb.sharkreccorder.R;
+import com.jb.sharkreccorder.Utils.Converters.DateConverter;
 import com.jb.sharkreccorder.Utils.Logger.Logger;
 import com.jb.sharkreccorder.Utils.Logger.LoggerLevel;
 import com.jb.sharkreccorder.Utils.Observer.IObserver;
@@ -100,7 +101,8 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
         public void FillValues(FilesRecorder file) {
 
             Context context =  this.itemView.getContext();
-            Date date = file.getDateTime_start();
+            Date date_start = file.getDateTime_start();
+            Date date_end = file.getDateTime_end();
 
             switch (file.getCall_type()){
                 case CallType.MISSING:
@@ -116,8 +118,8 @@ public class FileRecorderAdapter extends AAdapter<FilesRecorder, FileRecorderAda
 
             this.textView_caller_name.setText(file.getCaller_name());
             this.textView_date.setText("TODO");
-            this.textView_hours.setText(date.getHours() + " : " + date.getMinutes());
-            this.textView_duration.setText("TODO");
+            this.textView_hours.setText(date_start.getHours() + " : " + date_start.getMinutes());
+            this.textView_duration.setText("(" + DateConverter.Duration(date_start, date_end)+ " s)");
 
         }
 

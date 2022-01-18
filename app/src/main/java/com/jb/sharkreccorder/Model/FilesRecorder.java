@@ -30,9 +30,9 @@ public class FilesRecorder extends AModel {
     @ColumnInfo(name = "date_end")
     private String date_end;
 
-    //public static final int MISSING = 0;
-    //public static final int INPUT = 1;
-    //public static final int OUTPUT = 2;
+    // MISSING = 0;
+    // INPUT = 1;
+    // OUTPUT = 2;
     @ColumnInfo(name = "call_type")
     private int call_type;
 
@@ -64,6 +64,7 @@ public class FilesRecorder extends AModel {
 
     public Date getDateTime_end() { return DateConverter.toDate(date_end); }
     public void setDateTime_end(Date date) { this.date_end = DateConverter.toTimestamp(date); }
+
     //endregion
 
     public String getCaller_name() { return caller_name; }
